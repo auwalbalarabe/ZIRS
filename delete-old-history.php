@@ -10,33 +10,33 @@
 
     $database = $factory->createDatabase();
 
-    $reference = $database->getReference('messages/');
-    $messages = $reference->getValue();
+    $reference = $database->getReference('history/');
+    $histories = $reference->getValue();
 
-    if ( count($messages) > 20) {
+    if ( count($histories) > 50) {
 
         //number of messages to be deleted
-        $delNum = count($messages) - 20;
-        $old_messages = array_slice($messages, 0, $delNum);
+        $delNum = count($histories) - 50;
+        $old_histories = array_slice($histories, 0, $delNum);
 
-        foreach ($old_messages as $old_message) {
-            //echo $old_message['message'];
-            $database->getReference('messages/'. $old_message['id'])->remove();
+        foreach ($old_histories as $old_history) {
+            //echo $old_history['history'];
+            $database->getReference('history/'. $old_history['id'])->remove();
         }
-        echo 'messages removed: '. $delNum;
+        echo 'Histories are removed: '. $delNum;
 
     } else {
-        echo 'looks fine';
+        echo 'Histories are not up to 50';
     }
 
 
     //var_dump ( $value);
 
-    function give_output($status, $message) {
+    function give_output($status, $histories) {
         $outputObj = (object)array();
 
         $outputObj->status = $status;
-        $outputObj->message = $message;
+        $outputObj->history = $histories;
         
         exit(json_encode($outputObj));
     }
